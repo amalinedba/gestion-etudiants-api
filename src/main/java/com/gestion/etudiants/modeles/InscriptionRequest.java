@@ -27,7 +27,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class InscriptionRequest {
-  private EtudiantRessource etudiantRessource = null;
+  private EtudiantRessource etudiant = null;
   private String  anneeAcademique = null;
 
 
