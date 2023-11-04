@@ -27,13 +27,8 @@ import lombok.Setter;
 @Getter
 @Setter
 public class InscriptionRequest {
-  private String nom = null;
-
-  private String prenom = null;
-
-  private Integer etudiantId = null;
-
-  private Integer anneeAcademiqueId = null;
+  private EtudiantRessource etudiantRessource = null;
+  private String  anneeAcademique = null;
 
 
 }
