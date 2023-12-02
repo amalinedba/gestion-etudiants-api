@@ -1,41 +1,67 @@
 package com.gestion.etudiants.entites;
 
+import java.io.Serializable;
 import jakarta.persistence.*;
-import java.time.LocalDate;
-import java.util.List;
 
+
+/**
+ * The persistent class for the matiere database table.
+ * 
+ */
 @Entity
 @Table(name = "matiere")
-public class MatiereEntite {
+@NamedQuery(name="MatiereEntite.findAll", query="SELECT m FROM MatiereEntite m")
+public class MatiereEntite implements Serializable {
+	private static final long serialVersionUID = 1L;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="id_matiere")
+	private int idMatiere;
 
-    private String nomMatiere;
+	private String nom;
 
-    @OneToMany(mappedBy = "matiere")
-    private List<EtudiantEntite> etudiants;
+	@Column(name="volume_horaire")
+	private int volumeHoraire;
 
-    // Constructeur par défaut
-    public MatiereEntite() {
-        // Constructeur par défaut
-    }
+	//bi-directional many-to-one association to Module
+	@ManyToOne
+	@JoinColumn(name="id_module")
+	private ModuleEntite module;
 
-    // Constructeur avec paramètres
-    public MatiereEntite(String nomMatiere) {
-        this.nomMatiere = nomMatiere;
-    }
+	public MatiereEntite() {
+	}
 
-    // Getters and Setters
+	public int getIdMatiere() {
+		return this.idMatiere;
+	}
 
-    // Vous pouvez ajouter d'autres getters et setters si nécessaire
+	public void setIdMatiere(int idMatiere) {
+		this.idMatiere = idMatiere;
+	}
 
-    @Override
-    public String toString() {
-        return "Matiere{" +
-                "id=" + id +
-                ", nomMatiere='" + nomMatiere + '\'' +
-                '}';
-    }
+	public String getNom() {
+		return this.nom;
+	}
+
+	public void setNom(String nom) {
+		this.nom = nom;
+	}
+
+	public int getVolumeHoraire() {
+		return this.volumeHoraire;
+	}
+
+	public void setVolumeHoraire(int volumeHoraire) {
+		this.volumeHoraire = volumeHoraire;
+	}
+
+	public ModuleEntite getModule() {
+		return this.module;
+	}
+
+	public void setModule(ModuleEntite module) {
+		this.module = module;
+	}
+
 }

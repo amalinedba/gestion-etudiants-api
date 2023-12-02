@@ -1,89 +1,169 @@
 package com.gestion.etudiants.entites;
 
+import java.io.Serializable;
 import jakarta.persistence.*;
-import java.time.LocalDate;
+import java.util.Date;
+import java.util.Set;
 
+
+/**
+ * The persistent class for the etudiant database table.
+ * 
+ */
 @Entity
 @Table(name = "etudiant")
-public class EtudiantEntite {
+@NamedQuery(name="EtudiantEntite.findAll", query="SELECT e FROM EtudiantEntite e")
+public class EtudiantEntite implements Serializable {
+	private static final long serialVersionUID = 1L;
 
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="id_etudiant")
+	private int idEtudiant;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	private String adresse;
 
-    private String nom;
-    private String prenom;
-    private LocalDate dateNaissance;
-    private String adresse;
+	@Temporal(TemporalType.DATE)
+	@Column(name="date_naissance")
+	private Date dateNaissance;
 
-    // Constructeur par défaut (public ou protected)
-    public EtudiantEntite() {
-        // Constructeur par défaut
-    }
+	private String email;
 
-    // Constructeur avec paramètres
-    public EtudiantEntite(String nom, String prenom, LocalDate dateNaissance, String adresse) {
-        this.nom = nom;
-        this.prenom = prenom;
-        this.dateNaissance = dateNaissance;
-        this.adresse = adresse;
-    }
+	private String matricule;
 
-    // Getters and Setters
+	private String nom;
 
-    public Long getId() {
-        return id;
-    }
+	private String prenom;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	private String sexe;
 
-    public String getNom() {
-        return nom;
-    }
+	private String telephone;
 
-    public void setNom(String nom) {
-        this.nom = nom;
-    }
+	//bi-directional many-to-one association to Diplome
+	@OneToMany(mappedBy="etudiant")
+	private Set<DiplomeEntite> diplomes;
 
-    public String getPrenom() {
-        return prenom;
-    }
+	//bi-directional many-to-one association to Inscription
+	@OneToMany(mappedBy="etudiant")
+	private Set<InscriptionEntite> inscriptions;
 
-    public void setPrenom(String prenom) {
-        this.prenom = prenom;
-    }
+	public EtudiantEntite() {
+	}
 
-    public LocalDate getDateNaissance() {
-        return dateNaissance;
-    }
+	public int getIdEtudiant() {
+		return this.idEtudiant;
+	}
 
-    public void setDateNaissance(LocalDate dateNaissance) {
-        this.dateNaissance = dateNaissance;
-    }
+	public void setIdEtudiant(int idEtudiant) {
+		this.idEtudiant = idEtudiant;
+	}
 
-    public String getAdresse() {
-        return adresse;
-    }
+	public String getAdresse() {
+		return this.adresse;
+	}
 
-    public void setAdresse(String adresse) {
-        this.adresse = adresse;
-    }
+	public void setAdresse(String adresse) {
+		this.adresse = adresse;
+	}
 
-    // Vous pouvez ajouter d'autres getters et setters si nécessaire
+	public Date getDateNaissance() {
+		return this.dateNaissance;
+	}
 
-    @Override
-    public String toString() {
-        return "Etudiant{" +
-                "id=" + id +
-                ", nom='" + nom + '\'' +
-                ", prenom='" + prenom + '\'' +
-                ", dateNaissance=" + dateNaissance +
-                ", adresse='" + adresse + '\'' +
-                '}';
-    }
+	public void setDateNaissance(Date dateNaissance) {
+		this.dateNaissance = dateNaissance;
+	}
 
+	public String getEmail() {
+		return this.email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getMatricule() {
+		return this.matricule;
+	}
+
+	public void setMatricule(String matricule) {
+		this.matricule = matricule;
+	}
+
+	public String getNom() {
+		return this.nom;
+	}
+
+	public void setNom(String nom) {
+		this.nom = nom;
+	}
+
+	public String getPrenom() {
+		return this.prenom;
+	}
+
+	public void setPrenom(String prenom) {
+		this.prenom = prenom;
+	}
+
+	public String getSexe() {
+		return this.sexe;
+	}
+
+	public void setSexe(String sexe) {
+		this.sexe = sexe;
+	}
+
+	public String getTelephone() {
+		return this.telephone;
+	}
+
+	public void setTelephone(String telephone) {
+		this.telephone = telephone;
+	}
+
+	public Set<DiplomeEntite> getDiplomes() {
+		return this.diplomes;
+	}
+
+	public void setDiplomes(Set<DiplomeEntite> diplomes) {
+		this.diplomes = diplomes;
+	}
+
+	public DiplomeEntite addDiplome(DiplomeEntite diplome) {
+		getDiplomes().add(diplome);
+		diplome.setEtudiant(this);
+
+		return diplome;
+	}
+
+	public DiplomeEntite removeDiplome(DiplomeEntite diplome) {
+		getDiplomes().remove(diplome);
+		diplome.setEtudiant(null);
+
+		return diplome;
+	}
+
+	public Set<InscriptionEntite> getInscriptions() {
+		return this.inscriptions;
+	}
+
+	public void setInscriptions(Set<InscriptionEntite> inscriptions) {
+		this.inscriptions = inscriptions;
+	}
+
+	public InscriptionEntite addInscription(InscriptionEntite inscription) {
+		getInscriptions().add(inscription);
+		inscription.setEtudiant(this);
+
+		return inscription;
+	}
+
+	public InscriptionEntite removeInscription(InscriptionEntite inscription) {
+		getInscriptions().remove(inscription);
+		inscription.setEtudiant(null);
+
+		return inscription;
+	}
 
 }

@@ -1,47 +1,72 @@
 package com.gestion.etudiants.entites;
 
+import java.io.Serializable;
 import jakarta.persistence.*;
-import java.time.LocalDate;
+import java.util.Date;
+
+
+/**
+ * The persistent class for the inscription database table.
+ * 
+ */
 @Entity
 @Table(name = "inscription")
+@NamedQuery(name="InscriptionEntite.findAll", query="SELECT i FROM InscriptionEntite i")
+public class InscriptionEntite implements Serializable {
+	private static final long serialVersionUID = 1L;
 
-public class InscriptionEntite {
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="id_inscription")
+	private int idInscription;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	@Temporal(TemporalType.DATE)
+	@Column(name="date_inscription")
+	private Date dateInscription;
 
-    @ManyToOne
-    @JoinColumn(name = "etudiant_id", nullable = false)
-    private EtudiantEntite etudiant;
+	//bi-directional many-to-one association to Etudiant
+	@ManyToOne
+	@JoinColumn(name="id_etudiant")
+	private EtudiantEntite etudiant;
 
-    @ManyToOne
-    @JoinColumn(name = "filiere_id", nullable = false)
-    private FiliereEntite filiere;
+	//bi-directional many-to-one association to Niveau
+	@ManyToOne
+	@JoinColumn(name="id_niveau")
+	private NiveauEntite niveau;
 
-    private LocalDate dateInscription;
+	public InscriptionEntite() {
+	}
 
+	public int getIdInscription() {
+		return this.idInscription;
+	}
 
-    // Constructeur avec paramètres
-    public InscriptionEntite(EtudiantEntite etudiant, FiliereEntite filiere, LocalDate dateInscription) {
-        this.etudiant = etudiant;
-        this.filiere = filiere;
-        this.dateInscription = dateInscription;
-    }
+	public void setIdInscription(int idInscription) {
+		this.idInscription = idInscription;
+	}
 
-    public InscriptionEntite() {
+	public Date getDateInscription() {
+		return this.dateInscription;
+	}
 
-    }
+	public void setDateInscription(Date dateInscription) {
+		this.dateInscription = dateInscription;
+	}
 
-    // Vous pouvez ajouter d'autres méthodes si nécessaire
+	public EtudiantEntite getEtudiant() {
+		return this.etudiant;
+	}
 
-    @Override
-    public String toString() {
-        return "Inscription{" +
-                "id=" + id +
-                ", etudiant=" + etudiant +
-                ", filiere=" + filiere +
-                ", dateInscription=" + dateInscription +
-                '}';
-    }
+	public void setEtudiant(EtudiantEntite etudiant) {
+		this.etudiant = etudiant;
+	}
+
+	public NiveauEntite getNiveau() {
+		return this.niveau;
+	}
+
+	public void setNiveau(NiveauEntite niveau) {
+		this.niveau = niveau;
+	}
+
 }
