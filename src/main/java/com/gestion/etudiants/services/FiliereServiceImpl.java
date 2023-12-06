@@ -7,8 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.gestion.etudiants.controller.dto.FiliereDTO;
+import com.gestion.etudiants.controller.dto.ModuleDTO;
 import com.gestion.etudiants.entites.FiliereEntite;
 import com.gestion.etudiants.repositories.FiliereRepository;
+import com.gestion.etudiants.utils.ConversionUtils;
 
 @Service
 public class FiliereServiceImpl implements FiliereService{
@@ -21,31 +23,25 @@ public class FiliereServiceImpl implements FiliereService{
 	public List<FiliereDTO> getAllFilieres() {
 		List<FiliereEntite> filieres= filiereRepository.findAll();
 		return filieres.stream()
-				.map(f->convertirEnFiliereDto(f))
+				.map(f->ConversionUtils.convertirEnFiliereDto(f))
 				.collect(Collectors.toList());
 	}
 	
-	private FiliereDTO convertirEnFiliereDto(FiliereEntite entite) {
-		FiliereDTO filiereDTO = new FiliereDTO();
-		filiereDTO.setIdentifiantFiliere(entite.getIdFiliere());
-		filiereDTO.setDescriptionFiliere(entite.getDescription());
-		filiereDTO.setNomFiliere(entite.getNom());
-		return filiereDTO;
-	}
 	
-	private FiliereEntite convertirEnFiliereEntite(FiliereDTO filiereDTO) {
-		FiliereEntite entite = new FiliereEntite();
-		entite.setIdFiliere(filiereDTO.getIdentifiantFiliere());
-		entite.setDescription(filiereDTO.getDescriptionFiliere());
-		entite.setNom(filiereDTO.getNomFiliere());
-		return entite;
-	}
-
+	
 	@Override
 	public FiliereDTO addFiliere(FiliereDTO filiereDTO) {
-		FiliereEntite filiereEntite = convertirEnFiliereEntite(filiereDTO);
+		FiliereEntite filiereEntite = ConversionUtils.convertirEnFiliereEntite(filiereDTO);
+		// relier les fils au pere pour la sauvegarde cascade
+		filiereEntite.getModules().forEach(module->{
+			module.setFiliere(filiereEntite);
+			module.getMatieres().forEach(matiere->{
+				matiere.setModule(module);
+			});
+		});
+		
 		filiereRepository.save(filiereEntite);
-		return convertirEnFiliereDto(filiereEntite);
+		return ConversionUtils.convertirEnFiliereDto(filiereEntite);
 	}
 
 }

@@ -30,6 +30,8 @@ public class FiliereController {
 	@PostMapping
 	ResponseEntity<FiliereDTO> creerFiliere(@RequestBody FiliereDTO filiereDTO){
 		FiliereDTO filierecree = filiereService.addFiliere(filiereDTO);
+		System.out.println(filiereDTO);
+		// Ajouter LOG4J 
 		return new ResponseEntity(filierecree,HttpStatusCode.valueOf(200));
 	}
 

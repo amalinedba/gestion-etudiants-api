@@ -23,7 +23,7 @@ public class ModuleEntite implements Serializable {
 	private String nom;
 
 	//bi-directional many-to-one association to Matiere
-	@OneToMany(mappedBy="module")
+	@OneToMany(mappedBy="module", cascade = CascadeType.ALL)
 	private Set<MatiereEntite> matieres;
 
 	//bi-directional many-to-one association to Filiere
