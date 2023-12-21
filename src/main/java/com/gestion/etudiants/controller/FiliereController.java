@@ -23,6 +23,12 @@ public class FiliereController {
 		List<FiliereDTO> filieres = filiereService.getAllFilieres();
 		return new ResponseEntity(filieres,HttpStatusCode.valueOf(200));
 	}
+
+	@GetMapping("/{idFiliere}")
+	ResponseEntity<FiliereDTO> obtenirFiliere(@PathVariable("idFiliere") int idFiliere){
+		FiliereDTO filiere = filiereService.getFiliere(idFiliere);
+		return new ResponseEntity(filiere, HttpStatusCode.valueOf(200));
+	}
 	
 	@PostMapping
 	ResponseEntity<FiliereDTO> creerFiliere(@RequestBody FiliereDTO filiereDTO){

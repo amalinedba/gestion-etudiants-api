@@ -31,7 +31,7 @@ public class ModuleEntite implements Serializable {
 	private String nom;
 
 	//bi-directional many-to-one association to Matiere
-	@OneToMany(mappedBy="module", cascade = CascadeType.ALL,  fetch = FetchType.EAGER)
+	@OneToMany(mappedBy="module", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
 	private Set<MatiereEntite> matieres;
 
 	//bi-directional many-to-one association to Filiere

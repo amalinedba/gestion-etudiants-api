@@ -17,6 +17,10 @@ public class ConversionUtils {
 		filiereDTO.setIdentifiantFiliere(entite.getIdFiliere());
 		filiereDTO.setDescriptionFiliere(entite.getDescription());
 		filiereDTO.setNomFiliere(entite.getNom());
+		filiereDTO.setModules(entite.getModules()
+				.stream()
+				.map(moduleEntite -> convertirEnModuleDto(moduleEntite))
+				.collect(Collectors.toList()));
 		return filiereDTO;
 	}
 	
@@ -36,6 +40,7 @@ public class ConversionUtils {
 		MatiereEntite matiereEntite = new MatiereEntite();
 		matiereEntite.setIdMatiere(matiereDTO.getIdentifiantMatiere());
 		matiereEntite.setNom(matiereDTO.getLibelle());
+
 		return matiereEntite;
 	}
 
@@ -60,7 +65,9 @@ public class ConversionUtils {
 		ModuleDTO moduleDTO = new ModuleDTO();
 		moduleDTO.setIdentifiantModule(module.getIdModule());
 		moduleDTO.setLibelle(module.getNom());
-
+		moduleDTO.setMatieres(module.getMatieres().stream()
+				.map(matiereEntite -> convertirEnMatiereDto(matiereEntite))
+				.collect(Collectors.toList()));
 		return moduleDTO;
 	}
 }
