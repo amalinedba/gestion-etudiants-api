@@ -34,12 +34,21 @@ public class ConversionUtils {
 	
 	public static MatiereEntite convertirEnMatiereEntite(MatiereDTO matiereDTO) {
 		MatiereEntite matiereEntite = new MatiereEntite();
+		matiereEntite.setIdMatiere(matiereDTO.getIdentifiantMatiere());
 		matiereEntite.setNom(matiereDTO.getLibelle());
 		return matiereEntite;
+	}
+
+	public static MatiereDTO convertirEnMatiereDto(MatiereEntite matiere) {
+		MatiereDTO matiereDTO = new MatiereDTO();
+		matiereDTO.setIdentifiantMatiere(matiere.getIdMatiere());
+		matiereDTO.setLibelle(matiere.getNom());
+		return matiereDTO;
 	}
 	
 	public static ModuleEntite convertirEnModuleEntite(ModuleDTO moduleDTO) {
 		ModuleEntite moduleEntite = new ModuleEntite();
+		moduleEntite.setIdModule(moduleDTO.getIdentifiantModule());
 		moduleEntite.setNom(moduleDTO.getLibelle());
 		moduleEntite.setMatieres(moduleDTO.getMatieres().stream()
 				.map(matiere->convertirEnMatiereEntite(matiere))
@@ -47,4 +56,11 @@ public class ConversionUtils {
 		return moduleEntite;
 	}
 
+	public static ModuleDTO convertirEnModuleDto(ModuleEntite module) {
+		ModuleDTO moduleDTO = new ModuleDTO();
+		moduleDTO.setIdentifiantModule(module.getIdModule());
+		moduleDTO.setLibelle(module.getNom());
+
+		return moduleDTO;
+	}
 }

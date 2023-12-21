@@ -2,6 +2,10 @@ package com.gestion.etudiants.entites;
 
 import java.io.Serializable;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.util.Date;
 
 
@@ -12,6 +16,9 @@ import java.util.Date;
 @Entity
 @Table(name = "inscription")
 @NamedQuery(name="InscriptionEntite.findAll", query="SELECT i FROM InscriptionEntite i")
+@NoArgsConstructor
+@Getter
+@Setter
 public class InscriptionEntite implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -33,40 +40,5 @@ public class InscriptionEntite implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="id_niveau")
 	private NiveauEntite niveau;
-
-	public InscriptionEntite() {
-	}
-
-	public int getIdInscription() {
-		return this.idInscription;
-	}
-
-	public void setIdInscription(int idInscription) {
-		this.idInscription = idInscription;
-	}
-
-	public Date getDateInscription() {
-		return this.dateInscription;
-	}
-
-	public void setDateInscription(Date dateInscription) {
-		this.dateInscription = dateInscription;
-	}
-
-	public EtudiantEntite getEtudiant() {
-		return this.etudiant;
-	}
-
-	public void setEtudiant(EtudiantEntite etudiant) {
-		this.etudiant = etudiant;
-	}
-
-	public NiveauEntite getNiveau() {
-		return this.niveau;
-	}
-
-	public void setNiveau(NiveauEntite niveau) {
-		this.niveau = niveau;
-	}
 
 }

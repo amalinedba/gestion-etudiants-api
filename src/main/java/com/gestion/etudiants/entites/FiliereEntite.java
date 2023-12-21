@@ -2,6 +2,11 @@ package com.gestion.etudiants.entites;
 
 import java.io.Serializable;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import java.util.List;
 import java.util.Set;
 
 
@@ -12,6 +17,9 @@ import java.util.Set;
 @Entity
 @Table(name = "filiere")
 @NamedQuery(name="FiliereEntite.findAll", query="SELECT f FROM FiliereEntite f")
+@NoArgsConstructor
+@Getter
+@Setter
 public class FiliereEntite implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -28,55 +36,12 @@ public class FiliereEntite implements Serializable {
 	private String nom;
 
 	//bi-directional many-to-one association to Module
-	@OneToMany(mappedBy="filiere", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy="filiere", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Set<ModuleEntite> modules;
 
 	//bi-directional many-to-one association to Niveau
 	@OneToMany(mappedBy="filiere")
 	private Set<NiveauEntite> niveaus;
-
-	public FiliereEntite() {
-	}
-
-	public int getIdFiliere() {
-		return this.idFiliere;
-	}
-
-	public void setIdFiliere(int idFiliere) {
-		this.idFiliere = idFiliere;
-	}
-
-	public String getDescription() {
-		return this.description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	public int getDuree() {
-		return this.duree;
-	}
-
-	public void setDuree(int duree) {
-		this.duree = duree;
-	}
-
-	public String getNom() {
-		return this.nom;
-	}
-
-	public void setNom(String nom) {
-		this.nom = nom;
-	}
-
-	public Set<ModuleEntite> getModules() {
-		return this.modules;
-	}
-
-	public void setModules(Set<ModuleEntite> modules) {
-		this.modules = modules;
-	}
 
 	public ModuleEntite addModule(ModuleEntite module) {
 		getModules().add(module);
@@ -90,14 +55,6 @@ public class FiliereEntite implements Serializable {
 		module.setFiliere(null);
 
 		return module;
-	}
-
-	public Set<NiveauEntite> getNiveaus() {
-		return this.niveaus;
-	}
-
-	public void setNiveaus(Set<NiveauEntite> niveaus) {
-		this.niveaus = niveaus;
 	}
 
 	public NiveauEntite addNiveaus(NiveauEntite niveaus) {

@@ -2,6 +2,10 @@ package com.gestion.etudiants.entites;
 
 import java.io.Serializable;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.util.Set;
 
 
@@ -12,6 +16,9 @@ import java.util.Set;
 @Entity
 @Table(name = "niveau")
 @NamedQuery(name="NiveauEntite.findAll", query="SELECT n FROM NiveauEntite n")
+@NoArgsConstructor
+@Getter
+@Setter
 public class NiveauEntite implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -30,33 +37,6 @@ public class NiveauEntite implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="id_filiere")
 	private FiliereEntite filiere;
-
-	public NiveauEntite() {
-	}
-
-	public int getIdNiveau() {
-		return this.idNiveau;
-	}
-
-	public void setIdNiveau(int idNiveau) {
-		this.idNiveau = idNiveau;
-	}
-
-	public String getLibelle() {
-		return this.libelle;
-	}
-
-	public void setLibelle(String libelle) {
-		this.libelle = libelle;
-	}
-
-	public Set<InscriptionEntite> getInscriptions() {
-		return this.inscriptions;
-	}
-
-	public void setInscriptions(Set<InscriptionEntite> inscriptions) {
-		this.inscriptions = inscriptions;
-	}
 
 	public InscriptionEntite addInscription(InscriptionEntite inscription) {
 		getInscriptions().add(inscription);
